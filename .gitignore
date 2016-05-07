@@ -3,7 +3,8 @@
 /.*
 
 # target not ignore
-!/.gitignore
+!.gitignore
+!README.*
 !/av_actress/
 !/fc2/
 !/image_collect/
