@@ -1,0 +1,10 @@
+# all file ignore
+/*
+/.*
+
+# target not ignore
+!/.gitignore
+!ac_actress.py
+!sumomo_crawl.py
+
+

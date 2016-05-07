@@ -1,0 +1,8 @@
+# all file ignore
+/*
+/.*
+
+# target not ignore
+!/.gitignore
+!collect_image.py
+!collect_image_from_query.py

@@ -1,0 +1,9 @@
+# all file ignore
+/*
+/.*
+
+# target not ignore
+!/.gitignore
+!/av_actress/
+!/fc2/
+!/image_collect/
