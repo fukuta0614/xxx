@@ -1,6 +1,6 @@
 # all file ignore
 /*
-/.*
+
 
 # target not ignore
 !/.gitignore
