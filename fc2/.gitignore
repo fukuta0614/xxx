@@ -6,4 +6,4 @@
 !/.gitignore
 !fc2_downloader.py
 !fc2_ncurses.py
-!fc_downloader_gui.py
+!fc2_downloader_gui.py

@@ -49,14 +49,13 @@ def download_fc2(target, uncensored=0):
         return
 
     file_name = folder_name + title + ".flv"
-    sys.stdout.write(title + '\n')
-    sys.stdout.flush()
     urlretrieve(flv_url, file_name)
 
     with open(DOWNLOADED_FILE, "a") as f:
         f.write("{0}\n".format(target))
 
-    print(title,'   done')
+    sys.stdout.write(title + '\n')
+    sys.stdout.flush()
     return True
 
 
@@ -122,7 +121,7 @@ def main_uncensored():
     pool.map(partial(download_fc2, uncensored=1), targets)
     print('finished')
 
-        
+
 if __name__ == '__main__':
 
     import sys, io, argparse

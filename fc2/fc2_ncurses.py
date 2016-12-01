@@ -109,8 +109,10 @@ def download_fc2(target, row, uncensored=0):
 
     stdscr.addstr(2 * row, 0, title)
     file_name = folder_name + title + ".flv"
-    urlretrieve(flv_url, file_name, reporthook)
-
+    try:
+        urlretrieve(flv_url, file_name, reporthook)
+    except:
+        return False
     stdscr.addstr(2 * row + 1, 0, '[' + '#'*50 + ']' + "complete")
 
     with open(DOWNLOADED_FILE, "a") as f:
@@ -223,4 +225,3 @@ if __name__ == '__main__':
     #     main_uncensored()
     # else:
     #     main()
-
