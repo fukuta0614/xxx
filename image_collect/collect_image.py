@@ -8,21 +8,24 @@ from bs4 import BeautifulSoup
 from io import BytesIO
 from PIL import Image
 from debugger import set_debugger
+
+
 # from cv2 import cv
 
 
 class ImageCollecter(object):
-
     def __init__(self, base_url, folder_path, ):
 
         if os.path.exists(folder_path):
             try:
-                self.img_file_num = int(max([x for x in os.listdir(folder_path) if x.split('.')[0].isdigit()]).split('.')[0])
+                self.img_file_num = int(
+                    max([x for x in os.listdir(folder_path) if x.split('.')[0].isdigit()]).split('.')[0])
             except:
                 self.img_file_num = 0
             if os.path.exists(folder_path + 'gif'):
                 try:
-                    self.gif_file_num = int(max([x for x in os.listdir(folder_path+'gif') if x.split('.')[0].isdigit()]).split('.')[0])
+                    self.gif_file_num = int(
+                        max([x for x in os.listdir(folder_path + 'gif') if x.split('.')[0].isdigit()]).split('.')[0])
                 except:
                     self.gif_file_num = 0
         else:
@@ -88,7 +91,7 @@ class ImageCollecter(object):
                         pass
                 self.gif_file_num += 1
                 file_name = "{:03d}.gif".format(self.gif_file_num)
-                with open(folder_name+'gif/'+file_name,'wb') as f:
+                with open(folder_name + 'gif/' + file_name, 'wb') as f:
                     f.write(img_data.read())
 
                 return True
@@ -100,7 +103,7 @@ class ImageCollecter(object):
                 if height > 200 and width > 200:
                     self.img_file_num += 1
                     file_name = "{:03d}{}".format(self.img_file_num, ext)
-                    img.save(folder_name+file_name)
+                    img.save(folder_name + file_name)
                     return True
                 else:
                     # print('too small')
@@ -113,6 +116,7 @@ class ImageCollecter(object):
 
 if __name__ == '__main__':
     import datetime
+
     folder_name = './img/' + datetime.datetime.today().strftime("%Y%m%d") + '/'
     url = sys.argv[1]
     c = ImageCollecter(url, folder_name)

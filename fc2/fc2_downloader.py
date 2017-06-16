@@ -6,10 +6,10 @@ import os
 from bs4 import BeautifulSoup
 import multiprocessing as mp
 from functools import partial
+from multiprocessing.pool import ThreadPool
 
 
 def download_fc2(target, uncensored=0):
-
     if target.startswith('http'):
         match = re.search(r"http://video\.fc2\.com(?:/a)?/content/(\w+)/?$", target)
         if match is None:
@@ -47,9 +47,13 @@ def download_fc2(target, uncensored=0):
     if uncensored > 0 and not "無" in title:
         # print('not uncensored')
         return
-
+    sys.stdout.write(title + '\n')
+    sys.stdout.flush()
     file_name = folder_name + title + ".flv"
-    urlretrieve(flv_url, file_name)
+    try:
+        urlretrieve(flv_url, file_name)
+    except:
+        return False
 
     with open(DOWNLOADED_FILE, "a") as f:
         f.write("{0}\n".format(target))
@@ -60,7 +64,6 @@ def download_fc2(target, uncensored=0):
 
 
 def main(ranking_type=1):
-
     baseurl = "http://video.fc2.com/a/list.php?m=cont&page={}" + "&type={}".format(ranking_type)
 
     if os.path.exists(DOWNLOADED_FILE):
@@ -74,7 +77,7 @@ def main(ranking_type=1):
     links = soup.findAll("a")
     targets = set()
 
-    regex = re.compile(r"http://video\.fc2\.com(?:/a)?/content/(\w+)/?$")
+    regex = re.compile(r"(?:/a)?/content/(\w+)/?$")
 
     for link in links:
         url = link.get("href").split("&")[0]
@@ -86,7 +89,7 @@ def main(ranking_type=1):
             continue
         targets.add(target)
     # print(targets)
-    pool = mp.Pool()
+    pool = ThreadPool()  # mp.Pool()
     pool.map(download_fc2, targets)
     print('finished')
 
@@ -100,7 +103,7 @@ def main_uncensored():
     regex = re.compile(r"http://video\.fc2\.com(?:/a)?/content/(\w+)/?$")
     targets = set()
 
-    for p_num in range(1,9):
+    for p_num in range(1, 9):
         r = urlopen(baseurl.format(p_num), timeout=10)
         soup = BeautifulSoup(r.read(), "lxml")
         links = soup.findAll("a")
@@ -135,7 +138,6 @@ if __name__ == '__main__':
     folder_name = datetime.datetime.today().strftime("%Y%m%d") + '/'
 
     DOWNLOADED_FILE = "downloaded.txt"
-
 
     try:
         os.mkdir(folder_name)
