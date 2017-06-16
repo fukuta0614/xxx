@@ -100,7 +100,7 @@ def main_uncensored():
     with open(DOWNLOADED_FILE, "r") as f:
         downloaded = f.read().split('\n')
 
-    regex = re.compile(r"http://video\.fc2\.com(?:/a)?/content/(\w+)/?$")
+    regex = re.compile(r"(?:/a)?/content/(\w+)/?$")
     targets = set()
 
     for p_num in range(1, 9):
